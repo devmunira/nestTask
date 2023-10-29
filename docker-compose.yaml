@@ -1,0 +1,25 @@
+version: '3.1'
+
+services:
+
+  mongo:
+    image: mongo
+    restart: always
+    volumes:
+      - task-mongo-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DATABASE_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${DATABASE_USERPASSWORD}
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${DATABASE_USERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${DATABASE_USERPASSWORD}
+      ME_CONFIG_MONGODB_URL: ${DATABASE_URL}
+volumes:
+  task-mongo-data:
+    driver: local
